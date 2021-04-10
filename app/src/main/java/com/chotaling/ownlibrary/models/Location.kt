@@ -5,7 +5,7 @@ import io.realm.annotations.PrimaryKey
 import org.bson.types.ObjectId
 import java.util.*
 
-class Location : RealmObject() {
+open class Location : RealmObject() {
 
     @PrimaryKey
     var id : ObjectId = ObjectId.get()

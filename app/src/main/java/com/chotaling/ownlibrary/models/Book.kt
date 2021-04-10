@@ -5,10 +5,10 @@ import io.realm.annotations.PrimaryKey
 import org.bson.types.ObjectId
 import java.util.*
 
-class Book : RealmObject() {
+open class Book : RealmObject() {
 
     @PrimaryKey
-    var id : UUID = UUID.randomUUID()
+    var id : ObjectId = ObjectId.get()
 
     var isbn : String = ""
 

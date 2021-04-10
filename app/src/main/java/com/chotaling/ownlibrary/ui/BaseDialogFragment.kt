@@ -1,17 +1,14 @@
 package com.chotaling.ownlibrary.ui
 
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
-import com.chotaling.ownlibrary.R
-import com.chotaling.ownlibrary.ui.dashboard.DashboardViewModel
 
-abstract class BaseFragment<T : ViewModel> : Fragment() {
+abstract class BaseDialogFragment<T : ViewModel> : DialogFragment() {
 
     abstract val rootLayoutId : Int
     protected lateinit var rootView : View

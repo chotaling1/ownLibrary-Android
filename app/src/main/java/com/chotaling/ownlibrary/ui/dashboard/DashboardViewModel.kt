@@ -10,12 +10,12 @@ class DashboardViewModel : ViewModel() {
 
     private val bookService : BookService = BookService()
     private val _bookList = MutableLiveData<Set<Book>>().apply {
-        value = null
+        value = getBookList()
     }
     val bookList : LiveData<Set<Book>> = _bookList
 
-    fun getBookList()
+    fun getBookList() : Set<Book>?
     {
-        _bookList.value = bookService.getAllBooks();
+        return bookService.getAllBooks();
     }
 }
