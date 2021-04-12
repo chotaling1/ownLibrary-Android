@@ -3,7 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_book_list">
+
+    <fragment
+        android:id="@+id/navigation_book_list"
+        android:name="com.chotaling.ownlibrary.ui.books.BookListFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_book_list" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_addBookDialogFragment"
+            app:destination="@id/addBookDialogFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
@@ -12,23 +22,19 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.chotaling.ownlibrary.ui.books.BookListFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
-        <action
-            android:id="@+id/action_navigation_dashboard_to_addBookDialogFragment"
-            app:destination="@id/addBookDialogFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.chotaling.ownlibrary.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
     <dialog
         android:id="@+id/addBookDialogFragment"
-        android:name="com.chotaling.ownlibrary.ui.books.AddBookDialogFragment"
+        android:name="com.chotaling.ownlibrary.ui.books.BookSearchDialogFragment"
         android:label="AddBookDialogFragment"
         tools:layout="@layout/fragment_dialog_book_lookup" />
+
+    <fragment
+        android:id="@+id/book_search_results_fragment"
+        android:name="com.chotaling.ownlibrary.ui.books.BookSearchResultsFragment"
+        android:label="@string/search_results"
+        tools:layout="@layout/fragment_book_search_results" />
 </navigation>

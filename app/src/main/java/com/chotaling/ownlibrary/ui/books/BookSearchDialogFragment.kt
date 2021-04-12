@@ -1,14 +1,21 @@
 package com.chotaling.ownlibrary.ui.books
 
+import android.app.ProgressDialog
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavType
 import androidx.navigation.fragment.findNavController
 import com.chotaling.ownlibrary.R
+import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
-class AddBookDialogFragment : BaseDialogFragment<AddBookViewModel>() {
+class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
     override val rootLayoutId: Int
         get() = R.layout.fragment_dialog_book_lookup
 
@@ -19,7 +26,7 @@ class AddBookDialogFragment : BaseDialogFragment<AddBookViewModel>() {
     private lateinit var button_search : MaterialButton
     private lateinit var button_manual_add : MaterialButton
     override fun initViewModel() {
-        ViewModel = ViewModelProviders.of(this).get(AddBookViewModel::class.java);
+        ViewModel = ViewModelProviders.of(this).get(BookSeachViewModel::class.java);
     }
 
     override fun setupUI() {
@@ -48,7 +55,7 @@ class AddBookDialogFragment : BaseDialogFragment<AddBookViewModel>() {
         }
 
         button_manual_add.setOnClickListener{
-            this.findNavController().navigate(R.id.action_navigation_dashboard_to_addBookDialogFragment)
+            findNavController().navigate(R.id.action_navigation_dashboard_to_addBookDialogFragment)
         }
 
         button_cancel.setOnClickListener{
@@ -56,7 +63,16 @@ class AddBookDialogFragment : BaseDialogFragment<AddBookViewModel>() {
         }
 
         button_search.setOnClickListener{
-            ViewModel.lookupBook()
+            val progressDialog = ProgressDialog(context)
+            progressDialog.show()
+            lifecycleScope.launch {
+                var result = ViewModel.lookupBook()
+                progressDialog.dismiss()
+
+                var bundle = bundleOf()
+                bundle.putParcelableArray("BookResults", result)
+                findNavController().navigate(R.id.book_search_results_fragment, bundle)
+            }
         }
 
 

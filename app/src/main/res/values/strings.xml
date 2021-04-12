@@ -10,4 +10,5 @@
     <string name="cancel">Cancel</string>
     <string name="search">Search</string>
     <string name="manual_add_book">Add Book Manually</string>
+    <string name="search_results">Search Results</string>
 </resources>

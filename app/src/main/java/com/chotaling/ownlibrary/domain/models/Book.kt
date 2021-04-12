@@ -13,7 +13,7 @@ open class Book : RealmObject() {
 
     var title: String = ""
     var author: String = ""
-
+    var publisher : String = ""
     var imageUrl: String = ""
 
     var locationId : ObjectId? = null

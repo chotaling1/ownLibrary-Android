@@ -1,10 +1,12 @@
 package com.chotaling.ownlibrary.ui.books
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.chotaling.ownlibrary.domain.services.BookService
+import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 
-class AddBookViewModel : ViewModel() {
+class BookSeachViewModel : ViewModel() {
 
     private val _bookService = BookService()
     val author : MutableLiveData<String> by lazy {
@@ -20,8 +22,14 @@ class AddBookViewModel : ViewModel() {
         MutableLiveData<String>()
     }
 
-    fun lookupBook() {
+    suspend fun lookupBook() : Array<GoogleBookDto>? {
 
-        _bookService.lookupBook(isbn.value.toString(), author.value.toString(), title.value.toString())
+        if (isbn.value != null)
+        {
+            return _bookService.lookupBook(isbn.value!!, "", "")
+        }
+
+        return null;
+
     }
 }

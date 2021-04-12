@@ -12,6 +12,7 @@ abstract class BaseFragment<T : ViewModel> : Fragment() {
     abstract val rootLayoutId : Int
     protected lateinit var rootView : View
     protected lateinit var ViewModel : T
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,13 +22,17 @@ abstract class BaseFragment<T : ViewModel> : Fragment() {
         initViewModel()
         rootView = inflater.inflate(rootLayoutId, container, false)
         setupUI()
-        setupBindings()
+
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupBindings()
     }
 
 
     open fun setupUI() {}
-
     open fun setupBindings() {}
     abstract fun initViewModel()
 }

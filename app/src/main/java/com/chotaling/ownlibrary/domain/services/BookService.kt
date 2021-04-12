@@ -1,13 +1,18 @@
 package com.chotaling.ownlibrary.domain.services
 
+import android.content.Context
 import com.chotaling.ownlibrary.domain.RealmConfig
 import com.chotaling.ownlibrary.domain.models.Book
 import com.chotaling.ownlibrary.domain.models.Location
+import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
+import com.chotaling.ownlibrary.infrastructure.repositories.GoogleBooksRepository
+import io.realm.RealmResults
 import io.realm.kotlin.where
 
-class BookService
+class BookService()
 {
 
+    private val googleLookupService : GoogleBooksRepository = GoogleBooksRepository()
     private var realmConfig : RealmConfig = RealmConfig()
 
     fun addBook(book : Book)
@@ -42,10 +47,9 @@ class BookService
         return book
     }
 
-    fun getAllBooks() : Set<Book>?
+    fun getAllBooks() : RealmResults<Book>?
     {
-        val books = realmConfig.getInstance().where<Book>().findAll()
-        return books.toSet()
+        return realmConfig.getInstance().where<Book>().findAllAsync()
     }
 
     fun updateBook(book : Book)
@@ -64,7 +68,8 @@ class BookService
         return books.toSet()
     }
 
-    fun lookupBook(isbn : String, author : String, title : String) : Book? {
-        return null
+    suspend fun lookupBook(isbn : String, author : String, title : String) : Array<GoogleBookDto>? {
+
+        return googleLookupService.lookupBookByIsbn(isbn)
     }
 }
