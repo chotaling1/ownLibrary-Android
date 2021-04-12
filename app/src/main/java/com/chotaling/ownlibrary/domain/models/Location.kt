@@ -1,9 +1,8 @@
-package com.chotaling.ownlibrary.models
+package com.chotaling.ownlibrary.domain.models
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import org.bson.types.ObjectId
-import java.util.*
 
 open class Location : RealmObject() {
 

@@ -1,9 +1,8 @@
-package com.chotaling.ownlibrary.services
+package com.chotaling.ownlibrary.domain.services
 
-import com.chotaling.ownlibrary.RealmConfig
-import com.chotaling.ownlibrary.models.Book
-import com.chotaling.ownlibrary.models.Location
-import io.realm.Realm
+import com.chotaling.ownlibrary.domain.RealmConfig
+import com.chotaling.ownlibrary.domain.models.Book
+import com.chotaling.ownlibrary.domain.models.Location
 import io.realm.kotlin.where
 
 class BookService
@@ -63,5 +62,9 @@ class BookService
     {
         val books = realmConfig.getInstance().where<Book>().equalTo("locationId", location.id).findAll()
         return books.toSet()
+    }
+
+    fun lookupBook(isbn : String, author : String, title : String) : Book? {
+        return null
     }
 }

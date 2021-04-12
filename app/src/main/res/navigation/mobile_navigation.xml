@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.chotaling.ownlibrary.ui.dashboard.DashboardFragment"
+        android:name="com.chotaling.ownlibrary.ui.books.BookListFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -28,7 +28,7 @@
         tools:layout="@layout/fragment_notifications" />
     <dialog
         android:id="@+id/addBookDialogFragment"
-        android:name="com.chotaling.ownlibrary.ui.dashboard.AddBookDialogFragment"
+        android:name="com.chotaling.ownlibrary.ui.books.AddBookDialogFragment"
         android:label="AddBookDialogFragment"
         tools:layout="@layout/fragment_dialog_book_lookup" />
 </navigation>

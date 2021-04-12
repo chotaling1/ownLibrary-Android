@@ -1,4 +1,4 @@
-package com.chotaling.ownlibrary
+package com.chotaling.ownlibrary.domain
 
 import io.realm.Realm
 import io.realm.RealmConfiguration

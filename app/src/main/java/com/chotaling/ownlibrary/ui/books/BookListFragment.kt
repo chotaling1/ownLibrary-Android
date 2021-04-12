@@ -1,30 +1,22 @@
-package com.chotaling.ownlibrary.ui.dashboard
+package com.chotaling.ownlibrary.ui.books
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.chotaling.ownlibrary.R
-import com.chotaling.ownlibrary.models.Book
+import com.chotaling.ownlibrary.domain.models.Book
 import com.chotaling.ownlibrary.ui.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 
-class DashboardFragment : BaseFragment<DashboardViewModel>() {
+class BookListFragment : BaseFragment<BookListViewModel>() {
 
     override val rootLayoutId: Int
         get() = R.layout.fragment_dashboard
@@ -46,12 +38,11 @@ class DashboardFragment : BaseFragment<DashboardViewModel>() {
             if (!it.isEmpty())
             {
                 recycler_view.adapter = BookListAdapter(it.toList())
-
             }
         })
     }
     override fun initViewModel() {
-        ViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java);
+        ViewModel = ViewModelProviders.of(this).get(BookListViewModel::class.java);
     }
 
     class BookListAdapter(private val books : List<Book>) : RecyclerView.Adapter<BookListAdapter.BookCellViewHolder>() {

@@ -19,9 +19,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            buildConfigField "String", "GOOGLE_API_KEY", '"blah"'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            buildConfigField "String", "GOOGLE_API_KEY", '"blah2"'
         }
     }
     compileOptions {

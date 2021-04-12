@@ -1,7 +1,8 @@
-package com.chotaling.ownlibrary.ui.dashboard
+package com.chotaling.ownlibrary.ui.books
 
-import androidx.fragment.app.DialogFragment
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.chotaling.ownlibrary.R
 import com.chotaling.ownlibrary.ui.BaseDialogFragment
 import com.google.android.material.button.MaterialButton
@@ -30,7 +31,32 @@ class AddBookDialogFragment : BaseDialogFragment<AddBookViewModel>() {
         button_manual_add = rootView.findViewById(R.id.button_manual_add)
 
         isbn_lookup_field.setEndIconOnClickListener{
-            //TODO: Barcode scanner
+            //TODO: Navigate to barcode scanner
+        }
+
+        isbn_lookup_field.editText?.doOnTextChanged { text, start, before, count ->
+            ViewModel.isbn.value = text.toString()
+        }
+
+        title_field.editText?.doOnTextChanged{ text, start, before, count ->
+            ViewModel.title.value = text.toString()
+
+        }
+
+        author_field.editText?.doOnTextChanged { text, start, before, count ->
+            ViewModel.author.value = text.toString()
+        }
+
+        button_manual_add.setOnClickListener{
+            this.findNavController().navigate(R.id.action_navigation_dashboard_to_addBookDialogFragment)
+        }
+
+        button_cancel.setOnClickListener{
+            dismiss()
+        }
+
+        button_search.setOnClickListener{
+            ViewModel.lookupBook()
         }
 
 
