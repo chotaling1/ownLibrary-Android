@@ -8,6 +8,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    def keys = new Properties()
+    file("../keys.properties").withInputStream {
+        stream -> keys.load(stream)
+    }
     defaultConfig {
         applicationId "com.chotaling.ownlibrary"
         minSdkVersion 24
@@ -21,14 +25,14 @@ android {
     buildTypes {
         debug {
             debuggable true
-            buildConfigField "String", "GOOGLE_API_KEY", '"blah"'
+            buildConfigField "String", "GOOGLE_API_KEY", "\"" + keys.API_KEY_DEVELOPMENT + "\""
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable false
-            buildConfigField "String", "GOOGLE_API_KEY", '"blah2"'
+            buildConfigField "String", "GOOGLE_API_KEY", "\"" + keys.API_KEY_PROD + "\""
         }
     }
     compileOptions {
