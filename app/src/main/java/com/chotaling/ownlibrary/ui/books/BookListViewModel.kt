@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.chotaling.ownlibrary.domain.RealmConfig
 import com.chotaling.ownlibrary.domain.models.Book
 import com.chotaling.ownlibrary.domain.services.BookService
+import com.chotaling.ownlibrary.ui.BaseViewModel
 
-class BookListViewModel : ViewModel() {
+class BookListViewModel : BaseViewModel() {
 
     private val bookService : BookService = BookService()
     val bookList : MutableLiveData<Set<Book>> by lazy {

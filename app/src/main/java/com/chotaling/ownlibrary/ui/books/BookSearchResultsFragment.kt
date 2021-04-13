@@ -1,12 +1,17 @@
 package com.chotaling.ownlibrary.ui.books
 
+import android.app.ProgressDialog
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.ImageRequest
@@ -15,6 +20,7 @@ import com.chotaling.ownlibrary.R
 import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseFragment
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.coroutines.launch
 
 class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
 
@@ -25,7 +31,6 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
 
     override fun initViewModel() {
         ViewModel = ViewModelProviders.of(this).get(BookSearchResultsViewModel::class.java);
-        ViewModel.resultsList.value = arguments?.get("BookResults") as Array<GoogleBookDto>
     }
 
     override fun setupUI() {
@@ -38,6 +43,18 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
             if (!it.isEmpty())
             {
                 recycler_view.adapter = BookSearchResultAdapter(it.toList(), ViewModel)
+            }
+        })
+
+        ViewModel.barcodeResult.observe(viewLifecycleOwner, {
+            if (it != null)
+            {
+                val progressDialog = ProgressDialog(context)
+                progressDialog.show()
+                lifecycleScope.launch {
+                    ViewModel.lookupBook()
+                    progressDialog.dismiss()
+                }
             }
         })
     }

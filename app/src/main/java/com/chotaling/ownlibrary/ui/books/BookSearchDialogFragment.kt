@@ -38,7 +38,7 @@ class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
         button_manual_add = rootView.findViewById(R.id.button_manual_add)
 
         isbn_lookup_field.setEndIconOnClickListener{
-            //TODO: Navigate to barcode scanner
+            findNavController().navigate(R.id.activity_barcode_scanner)
         }
 
         isbn_lookup_field.editText?.doOnTextChanged { text, start, before, count ->

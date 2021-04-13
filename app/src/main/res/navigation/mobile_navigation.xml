@@ -30,11 +30,23 @@
         android:id="@+id/addBookDialogFragment"
         android:name="com.chotaling.ownlibrary.ui.books.BookSearchDialogFragment"
         android:label="AddBookDialogFragment"
-        tools:layout="@layout/fragment_dialog_book_lookup" />
+        tools:layout="@layout/fragment_dialog_book_lookup" >
+        <action
+            android:id="@+id/action_addBookDialogFragment_to_activity_barcode_scanner"
+            app:destination="@id/activity_barcode_scanner" />
+    </dialog>
 
     <fragment
         android:id="@+id/book_search_results_fragment"
         android:name="com.chotaling.ownlibrary.ui.books.BookSearchResultsFragment"
         android:label="@string/search_results"
         tools:layout="@layout/fragment_book_search_results" />
+
+    <activity
+        android:id="@+id/activity_barcode_scanner"
+        android:name="com.chotaling.ownlibrary.ui.books.BarcodeScanningActivity"
+        android:label="Scanner"
+        tools:layout="@layout/activity_barcode_scanner" />
+
+
 </navigation>

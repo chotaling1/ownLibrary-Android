@@ -3,6 +3,7 @@ package com.chotaling.ownlibrary.infrastructure.repositories
 import android.app.Application
 import android.content.Context
 import android.os.Debug
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -52,6 +53,7 @@ open class BaseRepository() {
 
 
         }
+        Log.d(BaseRepository::javaClass.toString(), result)
         return result
     }
 
