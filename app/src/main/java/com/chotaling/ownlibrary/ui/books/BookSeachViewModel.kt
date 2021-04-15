@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.chotaling.ownlibrary.domain.services.BookService
 import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
+import com.chotaling.ownlibrary.ui.BaseViewModel
 
-class BookSeachViewModel : ViewModel() {
+class BookSeachViewModel : BaseViewModel() {
 
     private val _bookService = BookService()
     val author : MutableLiveData<String> by lazy {

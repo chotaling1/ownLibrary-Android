@@ -47,8 +47,8 @@ class BookListFragment : BaseFragment<BookListViewModel>() {
     }
     override fun initViewModel() {
         ViewModel = ViewModelProviders.of(this).get(BookListViewModel::class.java);
-        ViewModel.getBookList()
     }
+
 
     class BookListAdapter(private val books : List<Book>) : RecyclerView.Adapter<BookListAdapter.BookCellViewHolder>() {
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): BookCellViewHolder {

@@ -1,5 +1,6 @@
 package com.chotaling.ownlibrary.ui.books
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,10 @@ class BookListViewModel : BaseViewModel() {
         MutableLiveData<Set<Book>>()
     }
 
+    override fun viewAppearing(arguments: Bundle?) {
+        super.viewAppearing(arguments)
+        getBookList()
+    }
     fun getBookList()
     {
         val books = bookService.getAllBooks();

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_book_list"
         android:name="com.chotaling.ownlibrary.ui.books.BookListFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_books"
         tools:layout="@layout/fragment_book_list" >
         <action
             android:id="@+id/action_navigation_dashboard_to_addBookDialogFragment"
@@ -16,10 +16,17 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.chotaling.ownlibrary.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_locations"
+        android:name="com.chotaling.ownlibrary.ui.locations.LocationFragment"
+        android:label="@string/title_locations"
+        tools:layout="@layout/fragment_locations" >
+        <action
+            android:id="@+id/action_navigation_locations_to_add_location_fragment"
+            app:destination="@id/add_location_fragment" />
+        <action
+            android:id="@+id/action_navigation_locations_to_add_shelf_fragment"
+            app:destination="@id/add_shelf_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -33,7 +40,10 @@
         tools:layout="@layout/fragment_dialog_book_lookup" >
         <action
             android:id="@+id/action_addBookDialogFragment_to_activity_barcode_scanner"
-            app:destination="@id/activity_barcode_scanner" />
+            app:destination="@id/navigation" />
+        <action
+            android:id="@+id/action_addBookDialogFragment_to_book_search_results_fragment"
+            app:destination="@id/book_search_results_fragment" />
     </dialog>
 
     <fragment
@@ -42,11 +52,31 @@
         android:label="@string/search_results"
         tools:layout="@layout/fragment_book_search_results" />
 
-    <activity
-        android:id="@+id/activity_barcode_scanner"
-        android:name="com.chotaling.ownlibrary.ui.books.BarcodeScanningActivity"
-        android:label="Scanner"
-        tools:layout="@layout/activity_barcode_scanner" />
+    <dialog
+        android:id="@+id/add_location_fragment"
+        android:name="com.chotaling.ownlibrary.ui.locations.AddLocationDialogFragment"
+        android:label="ADdLocationDialogFragment"
+        tools:layout="@layout/fragment_dialog_location_add" >
+    </dialog>
+
+    <dialog
+        android:id="@+id/add_shelf_fragment"
+        android:name="com.chotaling.ownlibrary.ui.locations.AddShelfDialogFragment"
+        android:label="AddShelfDialogFragment"
+        tools:layout="@layout/fragment_dialog_shelf_add" >
+    </dialog>
+
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/activity_barcode_scanner">
+        <activity
+            android:id="@+id/activity_barcode_scanner"
+            android:name="com.chotaling.ownlibrary.ui.books.BarcodeScanningActivity"
+            android:label="Scanner"
+            tools:layout="@layout/activity_barcode_scanner" />
+        <action
+            android:id="@+id/action_global_book_search_results_fragment"
+            app:destination="@id/book_search_results_fragment" />
+    </navigation>
 
 
 </navigation>

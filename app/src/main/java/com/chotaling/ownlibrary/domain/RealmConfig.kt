@@ -2,6 +2,7 @@ package com.chotaling.ownlibrary.domain
 
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.RealmMigration
 
 class RealmConfig {
 

@@ -55,7 +55,7 @@ class BookService()
     fun updateBook(book : Book)
     {
         realmConfig.getInstance().executeTransactionAsync { realm ->
-            val innerBook = realm.where<Book>().equalTo("isbn", book.isbn).findFirstAsync()
+            val innerBook = realm.where<Book>().equalTo("id", book.id).findFirstAsync()
             innerBook?.author = book.author
             innerBook?.imageUrl = book.imageUrl
             innerBook?.title = book.title

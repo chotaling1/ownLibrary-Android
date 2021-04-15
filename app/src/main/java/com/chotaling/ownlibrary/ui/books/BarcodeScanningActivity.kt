@@ -16,11 +16,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.chotaling.ownlibrary.ui.MainActivity
 import com.chotaling.ownlibrary.ui.books.CameraXViewModel
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
+import kotlinx.android.synthetic.main.activity_barcode_scanner.*
 import kotlinx.coroutines.MainScope
 import java.util.concurrent.Executors
 import kotlin.IllegalStateException
@@ -154,20 +156,27 @@ class BarcodeScanningActivity : AppCompatActivity() {
         barcodeScanner: BarcodeScanner,
         imageProxy: ImageProxy
     ) {
+        val _context = this
         val inputImage =
             InputImage.fromMediaImage(imageProxy.image!!, imageProxy.imageInfo.rotationDegrees)
 
         barcodeScanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
-                if (!barcodes.isEmpty())
-                {
+                if (!barcodes.isEmpty()) {
                     cameraProvider?.unbind(analysisUseCase)
-                    val barcode = barcodes.first()
-                    val intent = Intent(this, MainActivity::class.java).apply {
-                        putExtra("BarcodeResult", barcode.displayValue)
+
+                    val barCodeStringList = mutableListOf<String>()
+                    barcodes.forEach { b ->
+                        run {
+                            barCodeStringList.add(b.displayValue)
+                        }
                     }
-                    startActivity(intent)
-                    finish()
+
+                    val bundle = bundleOf("BarcodeResults" to barCodeStringList)
+                    findNavController(com.chotaling.ownlibrary.R.id.preview_layout).navigate(
+                        com.chotaling.ownlibrary.R.id.action_global_book_search_results_fragment,
+                        bundle
+                    )
                 }
             }
             .addOnFailureListener {

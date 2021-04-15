@@ -74,8 +74,5 @@ class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
                 findNavController().navigate(R.id.book_search_results_fragment, bundle)
             }
         }
-
-
-
     }
 }

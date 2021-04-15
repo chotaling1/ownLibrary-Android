@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white"
+    android:layout_marginTop="@dimen/margin_micro"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Library"
+            android:id="@+id/location_name_text_view"
+            style="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:id="@+id/address_text_view"
+            app:layout_constraintStart_toStartOf="@id/location_name_text_view"
+            app:layout_constraintTop_toBottomOf="@id/location_name_text_view"
+            app:layout_constraintEnd_toStartOf="@id/number_books_text_view"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_micro"
+            android:text="123 Main Street"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:id="@+id/number_books_text_view"
+            app:layout_constraintTop_toTopOf="@id/address_text_view"
+            app:layout_constraintEnd_toEndOf="@id/location_name_text_view"
+            android:text="500 Books"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:id="@+id/number_shelves_text_view"
+            app:layout_constraintTop_toBottomOf="@id/number_books_text_view"
+            app:layout_constraintEnd_toEndOf="@id/location_name_text_view"
+            android:layout_marginTop="@dimen/margin_micro"
+            android:text="20 Shelves"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/margin_small"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

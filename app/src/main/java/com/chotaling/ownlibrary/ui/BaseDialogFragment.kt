@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 
-abstract class BaseDialogFragment<T : ViewModel> : DialogFragment() {
+abstract class BaseDialogFragment<T : BaseViewModel> : DialogFragment() {
 
     abstract val rootLayoutId : Int
     protected lateinit var rootView : View
@@ -22,13 +22,18 @@ abstract class BaseDialogFragment<T : ViewModel> : DialogFragment() {
         initViewModel()
         rootView = inflater.inflate(rootLayoutId, container, false)
         setupUI()
-        setupBindings()
+
         return rootView
     }
 
 
-    open fun setupUI() {}
+    override fun onResume() {
+        super.onResume()
+        setupBindings()
+        ViewModel.viewAppearing(arguments)
+    }
 
+    open fun setupUI() {}
     open fun setupBindings() {}
     abstract fun initViewModel()
 }
