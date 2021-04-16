@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
 import com.android.volley.Request
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.StringRequest
@@ -24,14 +25,11 @@ class BookListFragment : BaseFragment<BookListViewModel>() {
     override val rootLayoutId: Int
         get() = R.layout.fragment_book_list
 
-    private lateinit var recycler_view : RecyclerView
-    private lateinit var add_book_button : FloatingActionButton
+    @BindView(R.id.recycler_view) lateinit var recycler_view : RecyclerView
+    @BindView(R.id.add_book_button) lateinit var add_book_button : FloatingActionButton
 
     override fun setupUI() {
-        recycler_view = rootView.findViewById(R.id.recycler_view)
         recycler_view.layoutManager = LinearLayoutManager(context)
-        add_book_button = rootView.findViewById(R.id.add_book_button)
-
         add_book_button.setOnClickListener{
             this.findNavController().navigate(R.id.action_navigation_dashboard_to_addBookDialogFragment)
         }

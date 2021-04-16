@@ -27,24 +27,19 @@ class BookSearchResultsViewModel : BaseViewModel() {
             resultsList.value = bookresults
         }
 
-        if (arguments.containsKey("BarcodeResult"))
+        if (arguments.containsKey("BarcodeResults"))
         {
-            val barcodeResultString = arguments.get("BarcodeResult") as String
-            if (barcodeResultString != null)
+            val barcodeResults = arguments.get("BarcodeResults") as Array<String>
+            if (barcodeResults != null)
             {
-                barcodeResult.value = barcodeResultString
+                var barcode : String = "";
+                barcodeResults.forEach { b ->
+                    barcode += b
+                }
+
+                barcodeResult.value = barcode
             }
         }
-    }
-
-    fun addBookToLibrary(book : GoogleBookDto)
-    {
-        val realmBook = Book()
-        realmBook.author = book.volumeInfo.authors?.first()
-        realmBook.title = book.volumeInfo.title
-        realmBook.imageUrl = book.volumeInfo.imageLinks?.smallThumbnail
-        realmBook.publisher = book.volumeInfo.publisher
-        _bookService.addBook(realmBook)
     }
 
     suspend fun lookupBook() {

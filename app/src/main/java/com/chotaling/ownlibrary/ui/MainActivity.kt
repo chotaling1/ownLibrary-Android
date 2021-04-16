@@ -36,10 +36,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController!!, appBarConfiguration)
         bottomNav!!.setupWithNavController(navController!!)
 
-        val barcode = intent.getStringExtra("BarcodeResult")
-        if (barcode != null)
+        val barcodes = intent.getStringArrayExtra("BarcodeResults")
+        if (barcodes != null)
         {
-            val bundle = bundleOf("BarcodeResult" to barcode)
+            val bundle = bundleOf("BarcodeResults" to barcodes)
             navController!!.navigate(R.id.book_search_results_fragment, bundle)
         }
     }

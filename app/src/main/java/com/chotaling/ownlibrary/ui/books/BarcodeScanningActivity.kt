@@ -14,9 +14,15 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.chotaling.ownlibrary.R
 import com.chotaling.ownlibrary.ui.MainActivity
 import com.chotaling.ownlibrary.ui.books.CameraXViewModel
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -32,7 +38,9 @@ import kotlin.math.min
 
 class BarcodeScanningActivity : AppCompatActivity() {
 
-    private var previewView: PreviewView? = null
+    lateinit var previewView: PreviewView
+    lateinit var navController: NavController
+
     private var cameraProvider: ProcessCameraProvider? = null
     private var cameraSelector: CameraSelector? = null
     private var lensFacing = CameraSelector.LENS_FACING_BACK
@@ -49,6 +57,8 @@ class BarcodeScanningActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.chotaling.ownlibrary.R.layout.activity_barcode_scanner)
+        previewView = findViewById(R.id.preview_view)
+        navController = findNavController(R.id.nav_host_fragment)
         setupCamera()
     }
 
@@ -172,11 +182,12 @@ class BarcodeScanningActivity : AppCompatActivity() {
                         }
                     }
 
-                    val bundle = bundleOf("BarcodeResults" to barCodeStringList)
-                    findNavController(com.chotaling.ownlibrary.R.id.preview_layout).navigate(
-                        com.chotaling.ownlibrary.R.id.action_global_book_search_results_fragment,
-                        bundle
-                    )
+
+                    val intent = Intent(this, MainActivity::class.java).apply {
+                        putExtra("BarcodeResults", barCodeStringList.toTypedArray())
+                    }
+                    startActivity(intent)
+                    finish()
                 }
             }
             .addOnFailureListener {

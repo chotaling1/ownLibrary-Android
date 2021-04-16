@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import butterknife.ButterKnife
 
 abstract class BaseFragment<T : BaseViewModel> : Fragment() {
 
@@ -21,6 +22,8 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
 
         initViewModel()
         rootView = inflater.inflate(rootLayoutId, container, false)
+        ButterKnife.bind(this, rootView)
+        ViewModel.viewAppearing(arguments)
         setupUI()
 
         return rootView
@@ -29,7 +32,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     override fun onResume() {
         super.onResume()
         setupBindings()
-        ViewModel.viewAppearing(arguments)
+
     }
 
 

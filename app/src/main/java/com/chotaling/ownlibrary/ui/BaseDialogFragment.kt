@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import butterknife.ButterKnife
 
 abstract class BaseDialogFragment<T : BaseViewModel> : DialogFragment() {
 
@@ -21,8 +22,9 @@ abstract class BaseDialogFragment<T : BaseViewModel> : DialogFragment() {
 
         initViewModel()
         rootView = inflater.inflate(rootLayoutId, container, false)
+        ButterKnife.bind(this, rootView)
+        ViewModel.viewAppearing(arguments)
         setupUI()
-
         return rootView
     }
 
@@ -30,7 +32,7 @@ abstract class BaseDialogFragment<T : BaseViewModel> : DialogFragment() {
     override fun onResume() {
         super.onResume()
         setupBindings()
-        ViewModel.viewAppearing(arguments)
+
     }
 
     open fun setupUI() {}

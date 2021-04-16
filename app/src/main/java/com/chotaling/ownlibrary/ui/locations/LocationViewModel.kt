@@ -25,4 +25,9 @@ class LocationViewModel : BaseViewModel() {
             locationsList.value = allBooks.toSet()
         }
     }
+
+    fun deleteLocation(location : Location)
+    {
+        _locationService.removeLocation(location.id)
+    }
 }

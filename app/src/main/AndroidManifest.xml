@@ -33,6 +33,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.books.BarcodeScanningActivity"
+            android:label="@string/isbn_scanner">
+        </activity>
     </application>
 
 </manifest>

@@ -21,10 +21,11 @@ class LocationService() {
         }
     }
 
-    fun removeLocation(location : Location)
+    fun removeLocation(id : ObjectId)
     {
         realmInstance.executeTransactionAsync { realm ->
-            location.deleteFromRealm()
+            val managedLocation = realm.where<Location>().equalTo("id", id).findFirst()
+            managedLocation?.deleteFromRealm()
         }
     }
 
@@ -33,13 +34,12 @@ class LocationService() {
         return realmInstance.where<Location>().findAllAsync()
     }
 
-    fun updateLocation(location : Location)
+    fun updateLocation(id : ObjectId, name : String, description : String)
     {
         realmInstance.executeTransactionAsync { realm ->
-            val managedLocation = realm.where<Location>().equalTo("id", location.id).findFirstAsync()
-            realmInstance.executeTransactionAsync { realm ->
-                managedLocation?.name = location.name
-            }
+            val managedLocation = realm.where<Location>().equalTo("id", id).findFirst()
+            managedLocation?.name = name
+            managedLocation?.description = description
         }
     }
 

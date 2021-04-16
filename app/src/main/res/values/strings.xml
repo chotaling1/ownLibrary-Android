@@ -12,7 +12,7 @@
     <string name="manual_add_book">Add Book Manually</string>
     <string name="search_results">Search Results</string>
     <string name="location_name">Location Name</string>
-    <string name="street_address">Street Address</string>
+    <string name="description">Description</string>
     <string name="address_2">Address 2</string>
     <string name="city">City</string>
     <string name="state">State</string>
@@ -21,4 +21,10 @@
     <string name="shelf">Shelf</string>
     <string name="location">Location</string>
     <string name="shelf_name">Shelf Name</string>
+    <string name="update">Update</string>
+    <string name="delete_confirmation">Are you sure you want to delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="isbn_scanner">ISBN Scanner</string>
+
 </resources>

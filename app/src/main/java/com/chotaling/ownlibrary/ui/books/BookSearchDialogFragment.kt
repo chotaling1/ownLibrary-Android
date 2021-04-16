@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.fragment.findNavController
+import butterknife.BindView
 import com.chotaling.ownlibrary.R
 import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseDialogFragment
@@ -19,12 +20,13 @@ class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
     override val rootLayoutId: Int
         get() = R.layout.fragment_dialog_book_lookup
 
-    private lateinit var isbn_lookup_field : TextInputLayout
-    private lateinit var title_field : TextInputLayout
-    private lateinit var author_field : TextInputLayout
-    private lateinit var button_cancel : MaterialButton
-    private lateinit var button_search : MaterialButton
-    private lateinit var button_manual_add : MaterialButton
+    @BindView(R.id.isbn_lookup_field) lateinit var isbn_lookup_field : TextInputLayout
+    @BindView(R.id.title_field) lateinit var title_field : TextInputLayout
+    @BindView(R.id.author_field) lateinit var author_field : TextInputLayout
+    @BindView(R.id.button_cancel) lateinit var button_cancel : MaterialButton
+    @BindView(R.id.button_search) lateinit var button_search : MaterialButton
+    @BindView(R.id.button_manual_add) lateinit var button_manual_add : MaterialButton
+
     override fun initViewModel() {
         ViewModel = ViewModelProviders.of(this).get(BookSeachViewModel::class.java);
     }
@@ -38,7 +40,7 @@ class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
         button_manual_add = rootView.findViewById(R.id.button_manual_add)
 
         isbn_lookup_field.setEndIconOnClickListener{
-            findNavController().navigate(R.id.activity_barcode_scanner)
+            findNavController().navigate(R.id.action_addBookDialogFragment_to_activity_barcode_scanner)
         }
 
         isbn_lookup_field.editText?.doOnTextChanged { text, start, before, count ->

@@ -39,18 +39,22 @@
         android:label="AddBookDialogFragment"
         tools:layout="@layout/fragment_dialog_book_lookup" >
         <action
-            android:id="@+id/action_addBookDialogFragment_to_activity_barcode_scanner"
-            app:destination="@id/navigation" />
-        <action
             android:id="@+id/action_addBookDialogFragment_to_book_search_results_fragment"
             app:destination="@id/book_search_results_fragment" />
+        <action
+            android:id="@+id/action_addBookDialogFragment_to_activity_barcode_scanner"
+            app:destination="@id/activity_barcode_scanner" />
     </dialog>
 
     <fragment
         android:id="@+id/book_search_results_fragment"
         android:name="com.chotaling.ownlibrary.ui.books.BookSearchResultsFragment"
         android:label="@string/search_results"
-        tools:layout="@layout/fragment_book_search_results" />
+        tools:layout="@layout/fragment_book_search_results" >
+        <action
+            android:id="@+id/action_book_search_results_fragment_to_add_book_fragment"
+            app:destination="@id/add_book_fragment" />
+    </fragment>
 
     <dialog
         android:id="@+id/add_location_fragment"
@@ -66,17 +70,22 @@
         tools:layout="@layout/fragment_dialog_shelf_add" >
     </dialog>
 
-    <navigation android:id="@+id/navigation"
-        app:startDestination="@id/activity_barcode_scanner">
-        <activity
-            android:id="@+id/activity_barcode_scanner"
-            android:name="com.chotaling.ownlibrary.ui.books.BarcodeScanningActivity"
-            android:label="Scanner"
-            tools:layout="@layout/activity_barcode_scanner" />
+    <dialog
+        android:id="@+id/add_book_fragment"
+        android:name="com.chotaling.ownlibrary.ui.books.BookAddDialogFragment"
+        android:label="Add Book"
+        tools:layout="@layout/fragment_dialog_book_add" >
         <action
-            android:id="@+id/action_global_book_search_results_fragment"
-            app:destination="@id/book_search_results_fragment" />
-    </navigation>
+            android:id="@+id/action_add_book_fragment_to_navigation_book_list"
+            app:destination="@id/navigation_book_list" />
+    </dialog>
+
+
+    <activity
+        android:id="@+id/activity_barcode_scanner"
+        android:name="com.chotaling.ownlibrary.ui.books.BarcodeScanningActivity"
+        android:label="Scanner"
+        tools:layout="@layout/activity_barcode_scanner" />
 
 
 </navigation>

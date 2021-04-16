@@ -16,5 +16,5 @@ open class Book : RealmObject() {
     var publisher : String = ""
     var imageUrl: String = ""
 
-    var shelfId : ObjectId? = null
+    var shelf : Shelf? = null
 }

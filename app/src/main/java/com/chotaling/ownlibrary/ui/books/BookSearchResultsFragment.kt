@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
 import com.chotaling.ownlibrary.R
@@ -27,14 +28,13 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
     override val rootLayoutId: Int
         get() = R.layout.fragment_book_search_results
 
-    private lateinit var recycler_view : RecyclerView
+    @BindView(R.id.recycler_view) lateinit var recycler_view : RecyclerView
 
     override fun initViewModel() {
         ViewModel = ViewModelProviders.of(this).get(BookSearchResultsViewModel::class.java);
     }
 
     override fun setupUI() {
-        recycler_view = rootView.findViewById(R.id.recycler_view)
         recycler_view.layoutManager = LinearLayoutManager(context)
     }
 
@@ -90,8 +90,8 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
                 titleTextView = view.findViewById(R.id.title_description_text_view)
 
                 view.setOnClickListener{
-                    _viewModel.addBookToLibrary(_book)
-                    view.findNavController().navigate(R.id.navigation_book_list)
+                    val bundle = bundleOf("Book" to _book)
+                    view.findNavController().navigate(R.id.action_book_search_results_fragment_to_add_book_fragment, bundle)
                 }
 
             }
