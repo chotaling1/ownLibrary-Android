@@ -11,6 +11,8 @@ import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.chotaling.ownlibrary.OwnLibraryApplication
+import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookResultDto
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -26,7 +28,7 @@ import kotlin.math.log
 
 open class BaseRepository() {
 
-    open suspend fun getData(urlString : String) : String?
+    suspend inline fun <reified T> getData(urlString : String) : T?
     {
 
         val result = withContext(Dispatchers.IO) {
@@ -35,7 +37,6 @@ open class BaseRepository() {
 
             // create URL
             val url: URL = URL(urlString)
-
             // create HttpURLConnection
             val conn: HttpURLConnection = url.openConnection() as HttpURLConnection
 
@@ -45,32 +46,27 @@ open class BaseRepository() {
             // receive response as inputStream
             inputStream = conn.inputStream
 
-            // convert inputstream to string
-            if (inputStream != null)
-                convertInputStreamToString(inputStream)
+            if (inputStream != null) {
+                val bufferedReader: BufferedReader? = BufferedReader(InputStreamReader(inputStream))
+
+                var line:String? = bufferedReader?.readLine()
+                var result:String = ""
+
+                while (line != null) {
+                    result += line
+                    line = bufferedReader?.readLine()
+                }
+
+                inputStream.close()
+                result
+            }
             else
                 ""
 
 
         }
         Log.d(BaseRepository::javaClass.toString(), result)
-        return result
-    }
-
-
-    private fun convertInputStreamToString(inputStream: InputStream): String {
-        val bufferedReader: BufferedReader? = BufferedReader(InputStreamReader(inputStream))
-
-        var line:String? = bufferedReader?.readLine()
-        var result:String = ""
-
-        while (line != null) {
-            result += line
-            line = bufferedReader?.readLine()
-        }
-
-        inputStream.close()
-        println(result)
-        return result
+        val gson = Gson()
+        return gson.fromJson(result, T::class.java);
     }
 }

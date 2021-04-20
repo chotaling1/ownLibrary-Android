@@ -175,16 +175,9 @@ class BarcodeScanningActivity : AppCompatActivity() {
                 if (!barcodes.isEmpty()) {
                     cameraProvider?.unbind(analysisUseCase)
 
-                    val barCodeStringList = mutableListOf<String>()
-                    barcodes.forEach { b ->
-                        run {
-                            barCodeStringList.add(b.displayValue)
-                        }
-                    }
-
 
                     val intent = Intent(this, MainActivity::class.java).apply {
-                        putExtra("BarcodeResults", barCodeStringList.toTypedArray())
+                        putExtra("isbn", barcodes.first().displayValue)
                     }
                     startActivity(intent)
                     finish()

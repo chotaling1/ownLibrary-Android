@@ -9,13 +9,14 @@ import com.chotaling.ownlibrary.infrastructure.repositories.GoogleBooksRepositor
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.kotlin.where
+import org.bson.types.ObjectId
 
 class BookService()
 {
 
     private val googleLookupService : GoogleBooksRepository = GoogleBooksRepository()
     private var realmInstance : Realm = RealmConfig().getInstance()
-
+    
     fun addBook(book : Book)
     {
         realmInstance.executeTransactionAsync() { realm ->
@@ -23,10 +24,11 @@ class BookService()
         }
     }
 
-    fun removeBook(book : Book)
+    fun removeBook(bookId : ObjectId)
     {
-        realmInstance.executeTransactionAsync { realm ->
-            book.deleteFromRealm()
+        realmInstance.executeTransactionAsync() { realm ->
+            val managedBook = realm.where<Book>().equalTo("id", bookId).findFirst()
+            managedBook?.deleteFromRealm()
         }
     }
 
@@ -77,8 +79,8 @@ class BookService()
         return returnedBooks
     }
 
-    suspend fun lookupBook(isbn : String, author : String, title : String) : Array<GoogleBookDto>? {
+    suspend fun lookupBook(isbn : String?, author : String?, title : String?, index : Int?, take : Int?) : Array<GoogleBookDto>? {
 
-        return googleLookupService.lookupBookByIsbn(isbn)
+        return googleLookupService.lookupBook(isbn, author, title, index, take)
     }
 }

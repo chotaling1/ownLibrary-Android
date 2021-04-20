@@ -21,6 +21,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     ): View? {
 
         initViewModel()
+        ViewModel.setContext(requireContext())
         rootView = inflater.inflate(rootLayoutId, container, false)
         ButterKnife.bind(this, rootView)
         ViewModel.viewAppearing(arguments)

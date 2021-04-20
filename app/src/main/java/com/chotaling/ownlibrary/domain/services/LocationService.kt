@@ -51,4 +51,8 @@ class LocationService() {
             innerLocation?.shelves?.add(shelf)
         }
     }
+
+//    fun findLocationForShelf(shelf : Shelf) : Location {
+//        var locations = realmInstance.where<Location>().eq
+//    }
 }

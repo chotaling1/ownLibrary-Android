@@ -36,6 +36,18 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
 
     override fun setupUI() {
         recycler_view.layoutManager = LinearLayoutManager(context)
+
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    ViewModel.lookupBookAsync(ViewModel.currentIndex)
+                }
+            }
+        })
     }
 
     override fun setupBindings() {
@@ -43,24 +55,17 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
             if (!it.isEmpty())
             {
                 recycler_view.adapter = BookSearchResultAdapter(it.toList(), ViewModel)
-            }
-        })
-
-        ViewModel.barcodeResult.observe(viewLifecycleOwner, {
-            if (it != null)
-            {
-                val progressDialog = ProgressDialog(context)
-                progressDialog.show()
-                lifecycleScope.launch {
-                    ViewModel.lookupBook()
-                    progressDialog.dismiss()
+                if (ViewModel.currentIndex > 0)
+                {
+                    recycler_view.scrollToPosition(ViewModel.currentIndex - ViewModel.TAKE_CONSTANT - 2)
                 }
+
             }
         })
     }
 
     class BookSearchResultAdapter(private val books : List<GoogleBookDto>,
-                                    private val ViewModel : BookSearchResultsViewModel) : RecyclerView.Adapter<BookSearchResultAdapter.BookCellViewHolder>() {
+                                    private val ViewModel : BookSearchResultsViewModel) : RecyclerView.Adapter<BookCellViewHolder>() {
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): BookCellViewHolder {
             // Create a new view, which defines the UI of the list item
             val view = LayoutInflater.from(viewGroup.context)
@@ -70,69 +75,27 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
 
         override fun onBindViewHolder(holder: BookCellViewHolder, position: Int) {
             val book = books[position]
-            holder.bindData(book, ViewModel)
+            holder.titleTextView .text = book.volumeInfo.title
+
+            var authors = ""
+            book.volumeInfo.authors?.forEach { s ->
+                if (!book.volumeInfo.authors.last().equals(s))
+                    authors += "$s, "
+                else
+                    authors += "$s"
+            }
+            holder.authorTextView.text = authors
+            book.volumeInfo.imageLinks?.smallThumbnail?.let {holder.loadImageView(it)}
+            holder.view.setOnClickListener{
+                val bundle = bundleOf("Book" to book)
+                holder.view.findNavController().navigate(R.id.action_book_search_results_fragment_to_add_book_fragment, bundle)
+            }
         }
 
         override fun getItemCount(): Int {
             return books.size
         }
 
-        class BookCellViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-            private lateinit var _book : GoogleBookDto
-            private lateinit var _viewModel: BookSearchResultsViewModel
-            var imageView: ImageView
-            var authorTextView: MaterialTextView
-            var titleTextView: MaterialTextView
 
-            init {
-                imageView = view.findViewById(R.id.book_image_view)
-                authorTextView = view.findViewById(R.id.author_description_text_view)
-                titleTextView = view.findViewById(R.id.title_description_text_view)
-
-                view.setOnClickListener{
-                    val bundle = bundleOf("Book" to _book)
-                    view.findNavController().navigate(R.id.action_book_search_results_fragment_to_add_book_fragment, bundle)
-                }
-
-            }
-
-            fun bindData(book : GoogleBookDto,
-                        viewModel : BookSearchResultsViewModel)
-            {
-                _viewModel = viewModel
-                _book = book
-                titleTextView.text = book.volumeInfo.title
-
-                var authors = ""
-                book.volumeInfo.authors?.forEach { s ->
-                    if (!book.volumeInfo.authors.last().equals(s))
-                        authors += "$s, "
-                    else
-                        authors += "$s"
-                }
-                authorTextView.text = authors
-                book.volumeInfo.imageLinks?.smallThumbnail?.let {loadImageView(it)}
-            }
-
-
-
-            fun loadImageView(url: String) {
-
-                val queue = Volley.newRequestQueue(view.context)
-                val imageRequest = ImageRequest(url,
-                    { response ->
-                        imageView.setImageBitmap(response)
-                    },
-                    0,
-                    0,
-                    ImageView.ScaleType.CENTER,
-                    Bitmap.Config.RGB_565,
-                    {
-                        imageView.setImageResource(R.drawable.ic_launcher_background)
-                    })
-
-                queue.add(imageRequest)
-            }
-        }
     }
 }

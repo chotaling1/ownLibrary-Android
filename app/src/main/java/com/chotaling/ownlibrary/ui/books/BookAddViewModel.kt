@@ -53,7 +53,7 @@ class BookAddViewModel : BaseViewModel()  {
         realmBook.title = book!!.volumeInfo.title
         realmBook.imageUrl = book!!.volumeInfo.imageLinks.smallThumbnail.ifEmpty { "" }
         realmBook.publisher = book!!.volumeInfo.publisher.ifEmpty { "" }
-        realmBook.shelf =  selectedShelf.value!!
+        realmBook.shelf =  selectedShelf.value
         _bookService.addBook(realmBook)
     }
 }

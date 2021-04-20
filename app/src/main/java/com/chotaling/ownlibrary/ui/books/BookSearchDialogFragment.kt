@@ -65,16 +65,11 @@ class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
         }
 
         button_search.setOnClickListener{
-            val progressDialog = ProgressDialog(context)
-            progressDialog.show()
-            lifecycleScope.launch {
-                var result = ViewModel.lookupBook()
-                progressDialog.dismiss()
-
-                var bundle = bundleOf()
-                bundle.putParcelableArray("BookResults", result)
-                findNavController().navigate(R.id.book_search_results_fragment, bundle)
-            }
+            var bundle = bundleOf()
+            bundle.putString("title", ViewModel.title.value)
+            bundle.putString("author", ViewModel.author.value)
+            bundle.putString("isbn", ViewModel.isbn.value)
+            findNavController().navigate(R.id.book_search_results_fragment, bundle)
         }
     }
 }

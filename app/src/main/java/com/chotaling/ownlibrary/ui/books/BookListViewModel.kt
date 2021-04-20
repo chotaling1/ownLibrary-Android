@@ -28,4 +28,9 @@ class BookListViewModel : BaseViewModel() {
             bookList.value = allBooks.toSet()
         }
     }
+
+    fun deleteBook(book : Book)
+    {
+        bookService.removeBook(book.id)
+    }
 }
