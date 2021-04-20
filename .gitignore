@@ -2,3 +2,4 @@
 .idea
 local.properties
 keys.properties
+gradle/wrapper/gradle-wrapper.properties
