@@ -26,5 +26,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="isbn_scanner">ISBN Scanner</string>
+    <string name="notes">Notes</string>
 
 </resources>

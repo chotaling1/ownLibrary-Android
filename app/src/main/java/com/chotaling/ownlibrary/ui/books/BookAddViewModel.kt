@@ -51,8 +51,8 @@ class BookAddViewModel : BaseViewModel()  {
         val realmBook = Book()
         realmBook.author = book!!.volumeInfo.authors?.first()
         realmBook.title = book!!.volumeInfo.title
-        realmBook.imageUrl = book!!.volumeInfo.imageLinks.smallThumbnail.ifEmpty { "" }
-        realmBook.publisher = book!!.volumeInfo.publisher.ifEmpty { "" }
+        realmBook.imageUrl = if (book!!.volumeInfo.imageLinks.smallThumbnail != null) book!!.volumeInfo.imageLinks.smallThumbnail else ""
+        realmBook.publisher = if (book!!.volumeInfo.publisher != null) book!!.volumeInfo.publisher else ""
         realmBook.shelf =  selectedShelf.value
         _bookService.addBook(realmBook)
     }

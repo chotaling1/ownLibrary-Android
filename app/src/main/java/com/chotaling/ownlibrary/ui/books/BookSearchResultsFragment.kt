@@ -30,6 +30,7 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
 
     @BindView(R.id.recycler_view) lateinit var recycler_view : RecyclerView
 
+    var bookDataSet = listOf<GoogleBookDto>()
     override fun initViewModel() {
         ViewModel = ViewModelProviders.of(this).get(BookSearchResultsViewModel::class.java);
     }
@@ -54,10 +55,14 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
         ViewModel.resultsList.observe(viewLifecycleOwner,  {
             if (!it.isEmpty())
             {
-                recycler_view.adapter = BookSearchResultAdapter(it.toList(), ViewModel)
-                if (ViewModel.currentIndex > 0)
+                bookDataSet = it
+                if (recycler_view.adapter == null)
                 {
-                    recycler_view.scrollToPosition(ViewModel.currentIndex - ViewModel.TAKE_CONSTANT - 2)
+                    recycler_view.adapter = BookSearchResultAdapter(bookDataSet, ViewModel)
+                }
+                else
+                {
+                    recycler_view.adapter!!.notifyDataSetChanged()
                 }
 
             }
@@ -70,7 +75,11 @@ class BookSearchResultsFragment : BaseFragment<BookSearchResultsViewModel>() {
             // Create a new view, which defines the UI of the list item
             val view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.cell_book, viewGroup, false)
-            return BookCellViewHolder(view)
+
+            var viewHolder = BookCellViewHolder(view)
+            viewHolder.extendedViewsVisible = false
+            viewHolder.more_options_image.visibility = View.GONE
+            return viewHolder
         }
 
         override fun onBindViewHolder(holder: BookCellViewHolder, position: Int) {

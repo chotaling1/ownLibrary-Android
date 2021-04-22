@@ -68,7 +68,10 @@ class BookListFragment : BaseFragment<BookListViewModel>() {
             // Create a new view, which defines the UI of the list item
             val view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.cell_book, viewGroup, false)
-            return BookCellViewHolder(view)
+            var holder = BookCellViewHolder(view)
+            holder.extendedViewsVisible = false
+
+            return holder
         }
 
         override fun onBindViewHolder(holder: BookCellViewHolder, position: Int) {

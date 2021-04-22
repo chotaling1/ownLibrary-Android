@@ -17,8 +17,8 @@ class AddLocationViewModel : BaseViewModel() {
     }
 
 
-    val description : MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    val description = MutableLiveData<String>().apply {
+        value = ""
     }
 
 
@@ -50,7 +50,7 @@ class AddLocationViewModel : BaseViewModel() {
     {
         val location = Location()
         location.name = locationName.value!!
-        location.description = description.value?.ifEmpty { "" }.toString()
+        location.description = if (description.value.isNullOrBlank()) "" else description.value!!
         _locationService.addLocation(location)
     }
 

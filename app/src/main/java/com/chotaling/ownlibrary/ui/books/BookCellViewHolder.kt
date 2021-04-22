@@ -19,7 +19,30 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 
 class BookCellViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
-    var extendedViewsVisible : Boolean = false
+    private var _extendedViewsVisible : Boolean = false
+    var extendedViewsVisible : Boolean
+        get() {
+            return _extendedViewsVisible
+        }
+        set(value) {
+
+            if (!value)
+            {
+                more_options_image.visibility = View.VISIBLE
+                edit_button.visibility = View.GONE
+                delete_button.visibility = View.GONE
+                extended_info_layout.visibility = View.GONE
+            }
+            else
+            {
+                more_options_image.visibility = View.GONE
+                extended_info_layout.visibility = View.VISIBLE
+                edit_button.visibility = View.VISIBLE
+                delete_button.visibility = View.VISIBLE
+            }
+
+            _extendedViewsVisible = value
+        }
     @BindView(R.id.book_image_view) lateinit var imageView : ImageView
     @BindView(R.id.author_description_text_view) lateinit var authorTextView : MaterialTextView
     @BindView(R.id.title_description_text_view) lateinit var titleTextView : MaterialTextView
@@ -64,20 +87,7 @@ class BookCellViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
         transition.addTarget(delete_button)
         transition.addTarget(extended_info_layout)
         TransitionManager.beginDelayedTransition(button_layout as ViewGroup, transition)
-        if (extendedViewsVisible)
-        {
-            more_options_image.visibility = View.VISIBLE
-            edit_button.visibility = View.GONE
-            delete_button.visibility = View.GONE
-            extended_info_layout.visibility = View.GONE
-        }
-        else
-        {
-            more_options_image.visibility = View.GONE
-            extended_info_layout.visibility = View.VISIBLE
-            edit_button.visibility = View.VISIBLE
-            delete_button.visibility = View.VISIBLE
-        }
+
 
         extendedViewsVisible = !extendedViewsVisible
     }

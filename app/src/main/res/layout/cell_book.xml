@@ -63,7 +63,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/extended_info_layout"
             app:layout_constraintStart_toStartOf="@id/title_text_view"
             app:layout_constraintEnd_toEndOf="@id/title_text_view"
