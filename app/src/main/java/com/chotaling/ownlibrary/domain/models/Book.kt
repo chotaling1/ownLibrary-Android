@@ -12,8 +12,9 @@ open class Book : RealmObject() {
     var isbn : String = ""
 
     var title: String = ""
-    var author: String = ""
-    var publisher : String = ""
-    var imageUrl: String = ""
+    var author: String? = ""
+    var publisher : String? = ""
+    var imageUrl: String? = ""
+    var notes : String? = ""
     var shelf : Shelf? = null
 }

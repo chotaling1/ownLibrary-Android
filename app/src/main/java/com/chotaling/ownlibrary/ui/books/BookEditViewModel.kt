@@ -10,7 +10,7 @@ import com.chotaling.ownlibrary.domain.services.LocationService
 import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseViewModel
 
-class BookAddViewModel : BaseViewModel()  {
+class BookEditViewModel : BaseViewModel()  {
 
     private val _bookService : BookService = BookService()
     private val _locationService : LocationService = LocationService()
@@ -19,6 +19,22 @@ class BookAddViewModel : BaseViewModel()  {
     }
 
     private var book : GoogleBookDto? = null
+
+    val titleName = MutableLiveData<String?>().apply {
+        value = ""
+    }
+
+    val authorName = MutableLiveData<String?>().apply {
+        value = ""
+    }
+
+    val publisherName = MutableLiveData<String?>().apply {
+        value = ""
+    }
+
+    val notes = MutableLiveData<String?>().apply {
+        value = ""
+    }
 
     val selectedLocation : MutableLiveData<Location> by lazy {
         MutableLiveData<Location>()
@@ -33,8 +49,14 @@ class BookAddViewModel : BaseViewModel()  {
         if (arguments != null && arguments.containsKey("Book"))
         {
             book = arguments.get("Book") as GoogleBookDto
-            getLocations()
+            titleName.value = book!!.volumeInfo.title;
+            var authors = "";
+            book!!.volumeInfo.authors.forEach { a -> authors += "$a " }
+            authorName.value = authors;
+            publisherName.value = book!!.volumeInfo.publisher
         }
+
+        getLocations()
     }
 
     fun getLocations()
@@ -49,11 +71,12 @@ class BookAddViewModel : BaseViewModel()  {
     fun addBookToLibrary()
     {
         val realmBook = Book()
-        realmBook.author = book!!.volumeInfo.authors?.first()
-        realmBook.title = book!!.volumeInfo.title
+        realmBook.author = authorName.value
+        realmBook.title = titleName.value!!
         realmBook.imageUrl = if (book!!.volumeInfo.imageLinks.smallThumbnail != null) book!!.volumeInfo.imageLinks.smallThumbnail else ""
-        realmBook.publisher = if (book!!.volumeInfo.publisher != null) book!!.volumeInfo.publisher else ""
+        realmBook.publisher = publisherName.value
         realmBook.shelf =  selectedShelf.value
+        realmBook.notes = notes.value
         _bookService.addBook(realmBook)
     }
 }

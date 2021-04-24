@@ -53,7 +53,17 @@
         tools:layout="@layout/fragment_book_search_results" >
         <action
             android:id="@+id/action_book_search_results_fragment_to_add_book_fragment"
-            app:destination="@id/add_book_fragment" />
+            app:destination="@id/navigation_book_edit_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_book_edit_fragment"
+        android:name="com.chotaling.ownlibrary.ui.books.BookEditFragment"
+        android:label="@string/title_books"
+        tools:layout="@layout/fragment_book" >
+        <action
+            android:id="@+id/action_navigation_book_edit_fragment_to_navigation_book_list"
+            app:destination="@id/navigation_book_list" />
     </fragment>
 
     <dialog
@@ -68,16 +78,6 @@
         android:name="com.chotaling.ownlibrary.ui.locations.AddShelfDialogFragment"
         android:label="AddShelfDialogFragment"
         tools:layout="@layout/fragment_dialog_shelf_add" >
-    </dialog>
-
-    <dialog
-        android:id="@+id/add_book_fragment"
-        android:name="com.chotaling.ownlibrary.ui.books.BookAddDialogFragment"
-        android:label="Add Book"
-        tools:layout="@layout/fragment_dialog_book_add" >
-        <action
-            android:id="@+id/action_add_book_fragment_to_navigation_book_list"
-            app:destination="@id/navigation_book_list" />
     </dialog>
 
 
