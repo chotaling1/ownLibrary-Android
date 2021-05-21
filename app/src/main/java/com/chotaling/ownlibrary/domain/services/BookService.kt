@@ -6,6 +6,7 @@ import com.chotaling.ownlibrary.domain.models.Book
 import com.chotaling.ownlibrary.domain.models.Location
 import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.infrastructure.repositories.GoogleBooksRepository
+import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.kotlin.where
@@ -32,10 +33,26 @@ class BookService()
         }
     }
 
-    fun getBookByTitle(title : String) : Set<Book>?
+    fun getBookById(id : ObjectId) : Book?
     {
-        val books = realmInstance.where<Book>().equalTo("author", title).findAll()
+        val book = realmInstance.where<Book>().equalTo("id", id).findFirst()
+        return book
+    }
+
+    fun getBookByTitle(author : String) : Set<Book>?
+    {
+        val books = realmInstance.where<Book>().equalTo("title", author).findAll()
         return books.toSet()
+    }
+
+    fun getBooksByTitle(title : String) : RealmResults<Book>?
+    {
+        return realmInstance.where<Book>().contains("title", title, Case.INSENSITIVE).findAll()
+    }
+
+    fun getBooksByTitleAsync(title : String) : RealmResults<Book>?
+    {
+        return realmInstance.where<Book>().contains("title", title, Case.INSENSITIVE).findAllAsync()
     }
 
     fun getBooksByAuther(author : String) : Set<Book>?
@@ -62,6 +79,9 @@ class BookService()
             innerBook?.author = book.author
             innerBook?.imageUrl = book.imageUrl
             innerBook?.title = book.title
+            innerBook?.shelf = book.shelf
+            innerBook?.publisher = book.publisher
+            innerBook?.notes = book.notes
         }
     }
 

@@ -6,7 +6,7 @@
     android:minWidth="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.books.BookSearchDialogFragment">
+    tools:context=".ui.books.BookLookupDialogFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/isbn_lookup_field"

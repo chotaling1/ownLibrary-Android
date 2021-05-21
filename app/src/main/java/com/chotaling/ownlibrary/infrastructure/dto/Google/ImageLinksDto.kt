@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ImageLinksDto (
-    var smallThumbnail : String,
-    var thumbnail : String
+    var smallThumbnail : String?,
+    var thumbnail : String?
 ) : Parcelable

@@ -30,6 +30,7 @@ class BookEditFragment : BaseFragment<BookEditViewModel>() {
     @BindView(R.id.button_cancel) lateinit var button_cancel : MaterialButton
     @BindView(R.id.button_add) lateinit var button_add : MaterialButton
 
+    var locationAdapter : LocationAdapter? = null;
     override fun initViewModel() {
         ViewModel = ViewModelProviders.of(this).get(BookEditViewModel::class.java);
     }
@@ -38,24 +39,36 @@ class BookEditFragment : BaseFragment<BookEditViewModel>() {
         ViewModel.locationList.observe(viewLifecycleOwner,  {
             if (!it.isEmpty())
             {
-                val adapter = LocationAdapter(requireContext(), android.R.layout.simple_list_item_1, it.toList())
-                (location_field.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+                locationAdapter = LocationAdapter(requireContext(), android.R.layout.simple_list_item_1, it.toList())
+                (location_field.editText as? AutoCompleteTextView)?.setAdapter(locationAdapter)
             }
         })
 
         ViewModel.selectedLocation.observe(viewLifecycleOwner,  {
             if (it != null && !it.shelves.isEmpty())
             {
+                (location_field.editText as? AutoCompleteTextView)?.setSelection(locationAdapter!!.getIndexOfLocation(ViewModel.selectedLocation.value!!))
+                shelf_field.visibility = View.VISIBLE
                 val adapter = ShelfAdapter(requireContext(), android.R.layout.simple_list_item_1, it.shelves.toList())
                 (shelf_field.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
+            else
+            {
+                shelf_field.visibility = View.GONE
+            }
+        })
+
+        ViewModel.editMode.observe(viewLifecycleOwner,  {
+            button_add.setText(if (it) "Update" else "Add")
         })
     }
 
     override fun setupUI() {
-
+        title_field.editText?.setText(ViewModel.titleName.value)
+        author_field.editText?.setText(ViewModel.authorName.value)
+        publisher_field.editText?.setText(ViewModel.publisherName.value)
         button_add.setOnClickListener {
-            ViewModel.addBookToLibrary()
+            ViewModel.setBook()
             findNavController().navigate(R.id.action_navigation_book_edit_fragment_to_navigation_book_list)
         }
 
@@ -72,7 +85,11 @@ class BookEditFragment : BaseFragment<BookEditViewModel>() {
                 id: Long
             ) {
                 val location = parent?.adapter?.getItem(position) as? Location
-                ViewModel.selectedLocation.value = location
+                if (ViewModel.selectedLocation.value != location)
+                {
+                    ViewModel.selectedLocation.value = location
+                }
+
             }
         }
 
@@ -104,6 +121,9 @@ class BookEditFragment : BaseFragment<BookEditViewModel>() {
         notes_field.editText?.doOnTextChanged { text, start, before, count ->
             ViewModel.notes.value = text.toString()
         }
+
+        shelf_field.visibility = View.GONE
+
 
     }
 }

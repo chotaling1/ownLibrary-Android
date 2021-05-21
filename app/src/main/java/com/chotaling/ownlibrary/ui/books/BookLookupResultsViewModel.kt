@@ -14,7 +14,7 @@ import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseViewModel
 import kotlinx.coroutines.*
 
-class BookSearchResultsViewModel : BaseViewModel() {
+class BookLookupResultsViewModel : BaseViewModel() {
 
     private val _bookService : BookService = BookService()
 

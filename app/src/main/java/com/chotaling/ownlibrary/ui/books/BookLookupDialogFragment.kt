@@ -1,22 +1,16 @@
 package com.chotaling.ownlibrary.ui.books
 
-import android.app.ProgressDialog
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavType
 import androidx.navigation.fragment.findNavController
 import butterknife.BindView
 import com.chotaling.ownlibrary.R
-import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 
-class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
+class BookLookupDialogFragment : BaseDialogFragment<BookLookupDialogViewModel>() {
     override val rootLayoutId: Int
         get() = R.layout.fragment_dialog_book_lookup
 
@@ -28,7 +22,7 @@ class BookSearchDialogFragment : BaseDialogFragment<BookSeachViewModel>() {
     @BindView(R.id.button_manual_add) lateinit var button_manual_add : MaterialButton
 
     override fun initViewModel() {
-        ViewModel = ViewModelProviders.of(this).get(BookSeachViewModel::class.java);
+        ViewModel = ViewModelProviders.of(this).get(BookLookupDialogViewModel::class.java);
     }
 
     override fun setupUI() {

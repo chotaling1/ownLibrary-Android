@@ -1,19 +1,14 @@
 package com.chotaling.ownlibrary.ui.books
 
 import android.os.Bundle
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.chotaling.ownlibrary.domain.RealmConfig
 import com.chotaling.ownlibrary.domain.models.Book
 import com.chotaling.ownlibrary.domain.services.BookService
 import com.chotaling.ownlibrary.ui.BaseViewModel
 import io.realm.Case
-import io.realm.RealmChangeListener
 import io.realm.RealmResults
-import io.realm.kotlin.where
 
-class BookListViewModel : BaseViewModel() {
+class BookSearchViewModel : BaseViewModel() {
 
     private val bookService : BookService = BookService()
 
@@ -29,11 +24,6 @@ class BookListViewModel : BaseViewModel() {
         realmBooks?.addChangeListener { allBooks ->
             bookList.value = allBooks.toSet()
         }
-    }
-
-    fun deleteBook(book : Book)
-    {
-        bookService.removeBook(book.id)
     }
 
     fun searchParametersUpdate(search : String, searchType : SearchType?)
@@ -62,5 +52,4 @@ class BookListViewModel : BaseViewModel() {
         Author(1),
         Publisher(2)
     }
-
 }

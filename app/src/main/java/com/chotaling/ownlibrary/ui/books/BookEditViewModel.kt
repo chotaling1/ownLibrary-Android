@@ -9,6 +9,7 @@ import com.chotaling.ownlibrary.domain.services.BookService
 import com.chotaling.ownlibrary.domain.services.LocationService
 import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseViewModel
+import org.bson.types.ObjectId
 
 class BookEditViewModel : BaseViewModel()  {
 
@@ -16,6 +17,10 @@ class BookEditViewModel : BaseViewModel()  {
     private val _locationService : LocationService = LocationService()
     val locationList : MutableLiveData<Set<Location>> by lazy {
         MutableLiveData<Set<Location>>()
+    }
+
+    val editMode = MutableLiveData<Boolean>().apply {
+        value = false
     }
 
     private var book : GoogleBookDto? = null
@@ -32,9 +37,16 @@ class BookEditViewModel : BaseViewModel()  {
         value = ""
     }
 
+    val isbn = MutableLiveData<String?>().apply {
+        value = ""
+    }
+
+
     val notes = MutableLiveData<String?>().apply {
         value = ""
     }
+
+    private var existingBookId : ObjectId? = null;
 
     val selectedLocation : MutableLiveData<Location> by lazy {
         MutableLiveData<Location>()
@@ -46,17 +58,34 @@ class BookEditViewModel : BaseViewModel()  {
 
     override fun viewAppearing(arguments: Bundle?) {
         super.viewAppearing(arguments)
-        if (arguments != null && arguments.containsKey("Book"))
-        {
-            book = arguments.get("Book") as GoogleBookDto
-            titleName.value = book!!.volumeInfo.title;
-            var authors = "";
-            book!!.volumeInfo.authors.forEach { a -> authors += "$a " }
-            authorName.value = authors;
-            publisherName.value = book!!.volumeInfo.publisher
-        }
-
         getLocations()
+        if (arguments != null )
+        {
+            if (arguments.containsKey("Book"))
+            {
+                book = arguments.get("Book") as GoogleBookDto
+                titleName.value = book!!.volumeInfo.title;
+                var authors = "";
+                book!!.volumeInfo.authors.forEach { a -> authors += "$a " }
+                authorName.value = authors;
+                publisherName.value = book!!.volumeInfo.publisher
+            }
+            else if (arguments.containsKey("BookId"))
+            {
+                existingBookId = arguments.get("BookId") as ObjectId
+                editMode.value = true;
+                val existingBook = _bookService.getBookById(existingBookId!!)
+                titleName.value = existingBook?.title
+                authorName.value = existingBook?.author
+                publisherName.value = existingBook?.publisher
+                if (existingBook?.shelf != null)
+                {
+                    selectedLocation.value = _locationService.getLocationById(existingBook.shelf!!.locationId!!)
+                    selectedShelf.value = existingBook.shelf;
+                }
+            }
+
+        }
     }
 
     fun getLocations()
@@ -68,12 +97,41 @@ class BookEditViewModel : BaseViewModel()  {
         }
     }
 
-    fun addBookToLibrary()
+    fun setBook()
+    {
+        if (editMode.value!!)
+        {
+            updateBook()
+        }
+        else
+        {
+            addBookToLibrary()
+        }
+    }
+
+    private fun updateBook()
+    {
+        val realmBook = _bookService.getBooksByTitle(titleName.value!!)?.first()
+        if (realmBook != null)
+        {
+            realmBook?.title = titleName.value!!
+            realmBook?.author = authorName.value!!
+            realmBook?.publisher = publisherName.value!!
+            realmBook?.shelf = selectedShelf.value
+            realmBook?.notes = notes.value
+            _bookService.updateBook(realmBook);
+
+        }
+
+
+    }
+
+    private fun addBookToLibrary()
     {
         val realmBook = Book()
         realmBook.author = authorName.value
         realmBook.title = titleName.value!!
-        realmBook.imageUrl = if (book!!.volumeInfo.imageLinks.smallThumbnail != null) book!!.volumeInfo.imageLinks.smallThumbnail else ""
+        realmBook.imageUrl = if (book!!.volumeInfo.imageLinks?.smallThumbnail != null) book!!.volumeInfo.imageLinks?.smallThumbnail else ""
         realmBook.publisher = publisherName.value
         realmBook.shelf =  selectedShelf.value
         realmBook.notes = notes.value

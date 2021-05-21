@@ -1,4 +1,4 @@
-package com.chotaling.ownlibrary.ui.books
+package com.chotaling.ownlibrary.ui.books.viewholders
 
 import android.graphics.Bitmap
 import android.view.Gravity
@@ -68,9 +68,10 @@ class BookCellViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             },
             0,
             0,
-            ImageView.ScaleType.CENTER,
-            Bitmap.Config.RGB_565,
+            ImageView.ScaleType.CENTER_INSIDE,
+            Bitmap.Config.ARGB_8888,
             {
+                it.printStackTrace()
                 imageView.setImageResource(R.drawable.ic_launcher_background)
             })
 

@@ -7,7 +7,7 @@ import com.chotaling.ownlibrary.domain.services.BookService
 import com.chotaling.ownlibrary.infrastructure.dto.Google.GoogleBookDto
 import com.chotaling.ownlibrary.ui.BaseViewModel
 
-class BookSeachViewModel : BaseViewModel() {
+class BookLookupDialogViewModel : BaseViewModel() {
     val author : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }

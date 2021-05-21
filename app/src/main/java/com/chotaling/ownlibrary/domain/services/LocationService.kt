@@ -14,6 +14,12 @@ class LocationService() {
 
     private var realmInstance : Realm = RealmConfig().getInstance()
 
+
+    fun getLocationById(locationId: ObjectId) : Location?
+    {
+        val location = realmInstance.where<Location>().equalTo("id", locationId).findFirst()
+        return location
+    }
     fun addLocation(location : Location)
     {
         realmInstance.executeTransactionAsync() { realm ->
@@ -51,8 +57,4 @@ class LocationService() {
             innerLocation?.shelves?.add(shelf)
         }
     }
-
-//    fun findLocationForShelf(shelf : Shelf) : Location {
-//        var locations = realmInstance.where<Location>().eq
-//    }
 }

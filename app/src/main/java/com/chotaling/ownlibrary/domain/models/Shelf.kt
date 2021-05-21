@@ -9,4 +9,5 @@ open class Shelf : RealmObject() {
     @PrimaryKey
     var id : ObjectId = ObjectId.get()
     var name : String = String()
+    var locationId : ObjectId? = null;
 }

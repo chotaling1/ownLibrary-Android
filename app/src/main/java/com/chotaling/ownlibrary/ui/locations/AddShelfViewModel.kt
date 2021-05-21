@@ -39,6 +39,7 @@ class AddShelfViewModel : BaseViewModel() {
     {
         val shelf = Shelf()
         shelf.name = shelfName.value!!
+        shelf.locationId = selectedLocation.value!!.id
         _locationService.addShelf(shelf, selectedLocation.value!!.id)
     }
 }

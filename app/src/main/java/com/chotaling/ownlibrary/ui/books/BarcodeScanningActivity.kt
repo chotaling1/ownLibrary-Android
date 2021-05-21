@@ -13,23 +13,15 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.chotaling.ownlibrary.R
 import com.chotaling.ownlibrary.ui.MainActivity
-import com.chotaling.ownlibrary.ui.books.CameraXViewModel
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
-import kotlinx.android.synthetic.main.activity_barcode_scanner.*
-import kotlinx.coroutines.MainScope
 import java.util.concurrent.Executors
 import kotlin.IllegalStateException
 import kotlin.math.abs
@@ -67,7 +59,7 @@ class BarcodeScanningActivity : AppCompatActivity() {
         cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
         ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
-        ).get(CameraXViewModel::class.java)
+        ).get(BarcodeScanningViewModel::class.java)
             .processCameraProvider
             .observe(
                 this,
@@ -124,6 +116,7 @@ class BarcodeScanningActivity : AppCompatActivity() {
         // BarcodeScannerOptions.Builder()
         //     .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
         //     .build();
+
         val barcodeScanner: BarcodeScanner = BarcodeScanning.getClient()
 
         if (cameraProvider == null) {

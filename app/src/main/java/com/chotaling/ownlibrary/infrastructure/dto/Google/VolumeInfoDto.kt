@@ -13,5 +13,5 @@ data class VolumeInfoDto (
     var description: String,
     var pageCount: Int,
     var category: String,
-    var imageLinks: ImageLinksDto
+    var imageLinks: ImageLinksDto?
 ) : Parcelable
