@@ -17,6 +17,8 @@ class BookSearchViewModel : BaseViewModel() {
         MutableLiveData<Set<Book>>()
     }
 
+    var searchType : SearchType = SearchType.Title
+
     override fun viewAppearing(arguments: Bundle?) {
         super.viewAppearing(arguments)
         realmBooks = bookService.getAllBooks();
@@ -26,7 +28,7 @@ class BookSearchViewModel : BaseViewModel() {
         }
     }
 
-    fun searchParametersUpdate(search : String, searchType : SearchType?)
+    fun searchParametersUpdate(search : String)
     {
         if (realmBooks != null)
         {
@@ -50,6 +52,7 @@ class BookSearchViewModel : BaseViewModel() {
     enum class SearchType(value : Int) {
         Title(0),
         Author(1),
-        Publisher(2)
+        Shelf(2),
+        Publisher(3);
     }
 }

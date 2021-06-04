@@ -36,11 +36,6 @@ class BookListFragment : BaseFragment<BookListViewModel>(), ISearchCallback {
             this.findNavController().navigate(R.id.action_navigation_dashboard_to_addBookDialogFragment)
         }
 
-//        val mainActivity = activity as MainActivity;
-//        if (mainActivity != null)
-//        {
-//            mainActivity.toolbar.
-//        }
     }
 
     override fun setupBindings() {
@@ -81,7 +76,6 @@ class BookListFragment : BaseFragment<BookListViewModel>(), ISearchCallback {
     class BookListAdapter(private var books : List<Book>, private val owner : BookListFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         enum class ViewType (val value : Int) {
-            SearchViewHolder(0),
             BookViewHolder(1)
         }
 
@@ -91,31 +85,16 @@ class BookListFragment : BaseFragment<BookListViewModel>(), ISearchCallback {
             notifyDataSetChanged()
         }
         override fun getItemViewType(position: Int): Int {
-            if (position == 0)
-            {
-                return ViewType.SearchViewHolder.value
-            }
-
             return ViewType.BookViewHolder.value
         }
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             // Create a new view, which defines the UI of the list item
 
-            if (viewType == ViewType.SearchViewHolder.value)
-            {
-                val view = LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.cell_search, viewGroup, false)
-                var holder = BookListSearchViewHolder(view, owner)
-                return holder
-            }
-            else
-            {
-                val view = LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.cell_book, viewGroup, false)
-                var holder = BookCellViewHolder(view)
-                holder.extendedViewsVisible = false
-                return holder
-            }
+            val view = LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.cell_book, viewGroup, false)
+            var holder = BookCellViewHolder(view)
+            holder.extendedViewsVisible = false
+            return holder
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -123,7 +102,7 @@ class BookListFragment : BaseFragment<BookListViewModel>(), ISearchCallback {
             if (holder is BookCellViewHolder)
             {
 
-                bindBookCellViewHolder(holder, position - 1)
+                bindBookCellViewHolder(holder, position)
             }
         }
 
@@ -173,7 +152,7 @@ class BookListFragment : BaseFragment<BookListViewModel>(), ISearchCallback {
         }
 
         override fun getItemCount(): Int {
-            return books.size + 1
+            return books.size
         }
     }
 }

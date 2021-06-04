@@ -21,17 +21,21 @@
             android:layout_height="match_parent"
             app:queryHint="@string/search"/>
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/search_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/title_tab_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title"/>
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/author_tab_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Author"/>
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/shelf_tab_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Shelf"/>
