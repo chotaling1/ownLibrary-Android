@@ -4,7 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +26,7 @@ class BookLookupResultsFragment : BaseFragment<BookLookupResultsViewModel>() {
 
     var bookDataSet = listOf<GoogleBookDto>()
     override fun initViewModel() {
-        ViewModel = ViewModelProviders.of(this).get(BookLookupResultsViewModel::class.java);
+        ViewModel = ViewModelProvider(this).get(BookLookupResultsViewModel::class.java);
     }
 
     override fun setupUI() {

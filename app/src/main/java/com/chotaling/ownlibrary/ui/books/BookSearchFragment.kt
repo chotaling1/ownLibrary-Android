@@ -16,6 +16,7 @@ import com.chotaling.ownlibrary.R
 import com.chotaling.ownlibrary.domain.models.Book
 import com.chotaling.ownlibrary.ui.BaseFragment
 import com.chotaling.ownlibrary.ui.books.viewholders.BookCellViewHolder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabItem
 import com.google.android.material.tabs.TabLayout
 
@@ -26,7 +27,7 @@ class BookSearchFragment : BaseFragment<BookSearchViewModel>(), SearchView.OnQue
     @BindView(R.id.recycler_view) lateinit var recycler_view : RecyclerView
     @BindView(R.id.search_view) lateinit var search_view : SearchView
     @BindView(R.id.search_tab_layout) lateinit var search_tab_layout : TabLayout
-
+    @BindView(R.id.add_book_button) lateinit var add_book_button : FloatingActionButton
     lateinit var bookListDataSet : List<Book>
     var bookListAdapter : BookListAdapter? = null
     override fun initViewModel() {
